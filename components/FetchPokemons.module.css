@@ -1,0 +1,21 @@
+.flex {
+  display: flex;
+  border: 1px solid black;
+  justify-content: space-between;
+  padding: 2rem;
+  align-items: center;
+}
+
+.left {
+  color: red;
+  transform: rotate(360deg);
+  transition: all 1s ease;
+  background-color: yellow;
+}
+
+.right {
+  color: blue;
+  transform: rotate(180deg);
+  transition: all 1s ease;
+  background-color: aqua;
+}

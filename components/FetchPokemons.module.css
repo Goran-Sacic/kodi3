@@ -1,3 +1,7 @@
+.visible {
+  opacity: 50%;
+}
+
 .flex {
   display: flex;
   border: 1px solid black;
@@ -18,4 +22,87 @@
   transform: rotate(180deg);
   transition: all 1s ease;
   background-color: aqua;
+}
+
+.healthBarContainer {
+  text-align: center;
+  transition: width 1s cubic-bezier((0.47, 1.64, 0.41, 0.8));
+}
+
+.health_bar {
+  display: flex;
+  text-align: center;
+  width: 15rem;
+  height: 1rem;
+  border-radius: 20px;
+  /* background-color: #62ff84; */
+  align-items: center;
+  justify-content: flex-start;
+  /* transition: width 1s cubic-bezier((0.47, 1.64, 0.41, 0.8)); */
+  overflow: hidden;
+}
+.p_green {
+  color: #079325;
+}
+.p_orange {
+  color: #ffcc00;
+}
+.p_red {
+  color: #610000;
+}
+
+.health_bar_green {
+  border: 3px solid #079325;
+}
+
+.health_bar_orange {
+  border: 3px solid #ffcc00;
+}
+
+.health_bar_red {
+  border: 3px solid #610000;
+}
+
+.hit_points {
+  display: flex;
+  position: relative;
+  height: 100%;
+  width: 100%;
+  transition: all 0.5s linear;
+}
+
+.hit_points_green {
+  background-color: #62ff84;
+}
+
+.hit_points_orange {
+  background-color: #fff7d6;
+}
+
+.hit_points_red {
+  background-color: #ff0000;
+}
+
+.test {
+  color: red;
+  border: 2px solid black;
+  width: 50rem;
+  text-align: center;
+}
+
+.test2 {
+  color: yellow;
+  border: 2px solid black;
+  width: 50rem;
+}
+
+.test3 {
+  color: cyan;
+}
+
+.menu {
+  padding: 5rem;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
 }

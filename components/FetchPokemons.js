@@ -449,6 +449,10 @@ function FetchPokemons() {
       )} */
         }
         <h1>POKEMON BRE</h1>
+        <p>
+          Pokemon sa većim attack speedom napada prvi. Defense stat iznad 80 ima
+          diminishing returns.
+        </p>
         <button onClick={handleGetRandomPokemons} disabled={gameOver}>
           NAĐI MI DVA RANDOM POKEMONA BRE
         </button>

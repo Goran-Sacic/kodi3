@@ -12,3 +12,13 @@ html,
 body {
   overflow-x: hidden;
 }
+
+button,
+input {
+  font-family: inherit;
+}
+
+body.active-modal {
+  overflow-x: unset;
+  overflow-y: hidden;
+}

@@ -207,8 +207,43 @@
   align-items: center;
 }
 
+.dmgIndicator {
+  display: flex;
+}
+
+.dmgIndicator div p {
+  opacity: 100%;
+}
+
 /* body.active-modal {
   overflow-y: hidden;
 }
 ovaj dio u nextjs ide u globals.css
  */
+
+.dmg {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.dmg-left {
+  font-size: 32px;
+  padding-left: 6rem;
+  color: red;
+  height: 2rem;
+  padding: 2rem;
+}
+
+.dmgNone {
+  height: 2rem;
+  padding: 2rem;
+}
+
+.dmg-right {
+  font-size: 32px;
+  padding-right: 6rem;
+  color: red;
+  height: 2rem;
+  padding: 2rem;
+}

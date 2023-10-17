@@ -47,6 +47,10 @@ function FetchPokemons() {
 
   const [modal, setModal] = useState(false);
 
+  const [dmgClassName, setDmgClassName] = useState("");
+
+  const [dmgIndicator, setDmgIndicator] = useState([]);
+
   const resetState = () => {
     setPokemon1({
       id: "",
@@ -79,6 +83,7 @@ function FetchPokemons() {
     setPoke1MaxHP("");
     setPoke2MaxHP("");
     setModal(!modal);
+    setDmgIndicator([]);
   };
 
   // Function to fetch all available Pokemons:
@@ -144,6 +149,7 @@ function FetchPokemons() {
     setPokemon2AttackOver(true);
     setFirstStrike(true);
     setBattleLog([]);
+    setDmgIndicator([]);
 
     setGameOver(false);
     /* let randomId1 = Math.floor(Math.random() * 1292 + 1);
@@ -279,8 +285,10 @@ function FetchPokemons() {
           battleLog.push(
             `${pokemon1.name} attacked ${pokemon2.name} for ${pokemon1AttackCalculated} damage.`
           );
+          dmgIndicator.push(`${pokemon1AttackCalculated} DMG`);
         } else {
           battleLog.push(`${pokemon1.name} missed!`);
+          dmgIndicator.push("MISS!");
         }
         setPokemon1AttackOver(true);
         setPokemon2AttackOver(false);
@@ -300,8 +308,10 @@ function FetchPokemons() {
           battleLog.push(
             `${pokemon2.name} attacked ${pokemon1.name} for ${pokemon2AttackCalculated} damage.`
           );
+          dmgIndicator.push(`${pokemon2AttackCalculated} DMG`);
         } else {
           battleLog.push(`${pokemon2.name} missed!`);
+          dmgIndicator.push("MISS!");
         }
         setPokemon1AttackOver(false);
         setPokemon2AttackOver(true);
@@ -326,8 +336,10 @@ function FetchPokemons() {
             battleLog.push(
               `${pokemon1.name} attacked ${pokemon2.name} for ${pokemon1AttackCalculated} damage.`
             );
+            dmgIndicator.push(`${pokemon1AttackCalculated} DMG`);
           } else {
             battleLog.push(`${pokemon1.name} missed!`);
+            dmgIndicator.push("MISS!");
           }
           setPokemon1AttackOver(true);
           setPokemon2AttackOver(false);
@@ -350,8 +362,10 @@ function FetchPokemons() {
             battleLog.push(
               `${pokemon2.name} attacked ${pokemon1.name} for ${pokemon2AttackCalculated} damage.`
             );
+            dmgIndicator.push(`${pokemon2AttackCalculated} DMG`);
           } else {
             battleLog.push(`${pokemon2.name} missed!`);
+            dmgIndicator.push("MISS!");
           }
           setPokemon1AttackOver(false);
           setPokemon2AttackOver(true);
@@ -371,6 +385,7 @@ function FetchPokemons() {
           battleLog.push(
             `${pokemon2.name} attacked ${pokemon1.name} for ${pokemon2AttackCalculated} damage.`
           );
+          dmgIndicator.push(`${pokemon2AttackCalculated} DMG`);
           if (pokemon1HpCalculated > 0) {
             setPokemon1({ ...pokemon1, hp: pokemon1HpCalculated.toFixed(2) });
           } else {
@@ -384,6 +399,7 @@ function FetchPokemons() {
           setPokemon2AttackOver(true);
         } else {
           battleLog.push(`${pokemon2.name} missed!`);
+          dmgIndicator.push("MISS!");
           setPokemon1AttackOver(false);
           setPokemon2AttackOver(true);
         }
@@ -399,6 +415,7 @@ function FetchPokemons() {
           battleLog.push(
             `${pokemon1.name} attacked ${pokemon2.name} for ${pokemon1AttackCalculated} damage.`
           );
+          dmgIndicator.push(`${pokemon1AttackCalculated} DMG`);
           if (pokemon2HpCalculated > 0) {
             setPokemon2({ ...pokemon2, hp: pokemon2HpCalculated.toFixed(2) });
           } else {
@@ -412,6 +429,7 @@ function FetchPokemons() {
           setPokemon2AttackOver(false);
         } else {
           battleLog.push(`${pokemon1.name} missed!`);
+          dmgIndicator.push("MISS!");
           setPokemon1AttackOver(true);
           setPokemon2AttackOver(false);
         }
@@ -419,6 +437,14 @@ function FetchPokemons() {
         setPokemon1Attacking(false);
       }
     }
+    /* if (pokemon1Attacking) {
+      setDmgClassName("dmg-left");
+    } else if (pokemon2Attacking) {
+      setDmgClassName("dmg-right");
+    } else {
+      setDmgClassName("");
+    }
+    console.log("dmg class name is: " + dmgClassName); */
   };
 
   useEffect(() => {
@@ -429,6 +455,16 @@ function FetchPokemons() {
       setDivClass("");
     }
   }, [gameOver]);
+
+  useEffect(() => {
+    if (pokemon1Attacking) {
+      setDmgClassName("dmg-right");
+    } else if (pokemon2Attacking) {
+      setDmgClassName("dmg-left");
+    } else {
+      setDmgClassName("");
+    }
+  }, [pokemon1Attacking, pokemon2Attacking]);
 
   const rotateLeft = pokemon1Attacking;
   /* const rotateRight = pokemon2Attacking; */
@@ -465,6 +501,8 @@ function FetchPokemons() {
       document.body.classList.remove("active-modal");
     }
   }, [modal]);
+
+  let lastEntryOfDmgIndicator = dmgIndicator[dmgIndicator.length - 1];
 
   return (
     <div>
@@ -509,6 +547,14 @@ function FetchPokemons() {
           )}
           <div className={`${styles.flex} ${styles.pokemon_battle}`}>
             <div className={styles.pokemon_container}>
+              {dmgClassName === "dmg-right" ? (
+                <div className={styles[`${dmgClassName}`]}>
+                  {" "}
+                  {lastEntryOfDmgIndicator}
+                </div>
+              ) : (
+                <div className={styles.dmgNone}></div>
+              )}
               {pokemon1.name && pokemon2.name ? (
                 <div className={styles.healthBarContainer}>
                   <p
@@ -571,6 +617,7 @@ function FetchPokemons() {
               )}
 
               <h1>{pokemon1.name}</h1>
+
               <img src={pokemon1.img} />
 
               {gameStart && (
@@ -584,6 +631,7 @@ function FetchPokemons() {
                 </div>
               )}
             </div>
+
             {gameStart ? (
               <div className={styles.arrow_btn_container}>
                 <div
@@ -608,6 +656,14 @@ function FetchPokemons() {
             )}
 
             <div className={styles.pokemon_container}>
+              {dmgClassName === "dmg-left" ? (
+                <div className={styles[`${dmgClassName}`]}>
+                  {" "}
+                  {lastEntryOfDmgIndicator}
+                </div>
+              ) : (
+                <div className={styles.dmgNone}></div>
+              )}
               {pokemon1.name && pokemon2.name ? (
                 <div className={styles.healthBarContainer}>
                   <p
@@ -685,6 +741,17 @@ function FetchPokemons() {
               )}
             </div>
           </div>
+          {gameStart && (
+            <div className={dmgClassName}>
+              <p>only last</p>
+              <div>
+                {lastEntryOfDmgIndicator}
+                {/* {dmgIndicator.map((log, index) => (
+                  <li key={index}>{log}</li>
+                ))} */}
+              </div>
+            </div>
+          )}
           {fetching ? <p>Loading Pokemons...</p> : ""}
           {gameStart && (
             <div>
@@ -882,6 +949,7 @@ function FetchPokemons() {
           from repetition, injected humour, or non-characteristic words etc.
         </p> */}
       </div>
+
       {modal && (
         <div className={styles.modal}>
           <div /* onClick={toggleModal} */ className={styles.overlay}></div>
